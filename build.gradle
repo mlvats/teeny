@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.example.teeny'
+version = '0.1-SNAPSHOT'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+repositories {
+        
+     maven { url "https://repository.apache.org/content/repositories/snapshots" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE")
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.2.4.RELEASE'
+//   compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version:'1.2.4.RELEASE'
+//  compile group: 'org.apache.geode', name: 'gemfire-core', version:'1.0.0-incubating-SNAPSHOT'
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.2.4.RELEASE') {
+exclude(module: 'commons-logging')
+    }
+//    providedCompile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:'1.2.4.RELEASE'
+}
