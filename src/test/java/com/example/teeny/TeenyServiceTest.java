@@ -1,29 +1,26 @@
 package com.example.teeny;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
+import com.example.teeny.TeenyService.Meta;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
-import com.example.teeny.TeenyService.Meta;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TeenyService.class)
-@WebAppConfiguration
-@IntegrationTest("server.port:0")
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = TeenyService.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TeenyServiceTest {
 
   String url1 = "www.yahoo.com";
@@ -31,13 +28,13 @@ public class TeenyServiceTest {
   String url2 = "www.google.com";
   String url2Hash = Integer.toString(url2.hashCode(), 36).substring(1);
 
-  @Value("${local.server.port}")
+  @LocalServerPort
   int port;
 
   String postUrl;
   String getUrl;
 
-  RestTemplate rest = new TestRestTemplate();
+  TestRestTemplate rest = new TestRestTemplate();
 
   @Before
   public void setup() {
@@ -151,7 +148,7 @@ public class TeenyServiceTest {
   public void emptyMapShouldNotFail() {
     String getUrl = "http://localhost:" + port;
 
-    RestTemplate rest = new TestRestTemplate();
+    TestRestTemplate rest = new TestRestTemplate();
     ResponseEntity<String> response = rest.getForEntity(getUrl, String.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals("[]", response.getBody());
@@ -169,7 +166,7 @@ public class TeenyServiceTest {
     assertEquals(url, response.getBody());
   }
 
-  private void verifyCount(RestTemplate rest, String postUrl, int count) {
+  private void verifyCount(TestRestTemplate rest, String postUrl, int count) {
     ResponseEntity<Meta> response;
     response = rest.getForEntity(postUrl + "/?verbose={verbose}", Meta.class, "false");
     assertEquals(HttpStatus.OK, response.getStatusCode());
