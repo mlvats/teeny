@@ -28,14 +28,9 @@ Then install docker-compose with ```sudo pip install -U docker-compose```
 This step will clone this repository and build the application, which consists 
 of a SpringBoot application that has a single Servlet. 
 
-Otherwhise if you're running locally without Docker, clone this repository and build an executable jar:
+Otherwhise if you're running locally without Docker, clone this repository and start the application using:
 
-``` mvn clean package ``` 
-
-And start the client application with:
-
-```java -jar /teeny/target/teeny-0.1-SNAPSHOT.war```
-
+``` ./gradlew clean bootRun```
 
 ##  Creating Apache Geode regions
 
