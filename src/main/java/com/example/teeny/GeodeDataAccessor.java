@@ -1,5 +1,8 @@
 package com.example.teeny;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.geode.cache.Region;
@@ -7,6 +10,7 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.cache.query.*;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +44,8 @@ public class GeodeDataAccessor implements DataAccessor {
   }
 
   @Override
-  public Teeny[] getAll() {
-    Teeny[] result = new Teeny[size()];
+  public List<Teeny> getAll() {
+    List<Teeny> result = new ArrayList<>();
 
     return result;
   }

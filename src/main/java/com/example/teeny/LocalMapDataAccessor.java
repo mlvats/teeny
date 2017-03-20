@@ -1,5 +1,7 @@
 package com.example.teeny;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,11 +28,10 @@ public class LocalMapDataAccessor implements DataAccessor {
   }
 
   @Override
-  public Teeny[] getAll() {
-    Teeny[] result = new Teeny[map.size()];
-    int i = 0;
+  public List<Teeny> getAll() {
+    List<Teeny> result = new ArrayList<>(map.size());
     for (Entry<String, Teeny> entry : map.entrySet()) {
-      result[i++] = entry.getValue();
+      result.add(entry.getValue());
     }
     return result;
   }
